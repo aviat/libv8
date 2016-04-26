@@ -1,14 +1,27 @@
+os:
+  - linux
 rvm:
-  - 2.0.0
+  - 2.3.0
   - 2.1.5
+  - 2.0.0
   - 1.9.3
   - rbx
+matrix:
+  include:
+  - os: osx
+    osx_image: xcode7.3
+    rvm: 2.1.3
+  - os: osx
+    osx_image: xcode7.2
+    rvm: 2.1.3
 bundler_args: --jobs=1 --retry=3
 notifications:
   recipients:
     - cowboyd@thefrontside.net
     - bordjukov@gmail.com
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install git-svn
-  - gem update bundler
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install git-svn ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then gem update bundler ; fi
+after_success:
+  - bundle exec rake binary

@@ -28,3 +28,4 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo gem install bundler ; fi
 after_success:
   - bundle exec rake binary
+  - ls pkg/
